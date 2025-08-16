@@ -1,0 +1,151 @@
+# Literature Review Clustering Configuration
+# Blockchain & Social Network Analysis Project
+
+# Processing Configuration
+processing:
+  batch_size: 10  # Number of papers to process per batch
+  max_retries: 3  # Maximum API retry attempts
+  retry_delay_min: 4  # Minimum retry delay (seconds)
+  retry_delay_max: 10  # Maximum retry delay (seconds)
+  rate_limit_delay: 2  # Delay between batches (seconds)
+  backup_frequency: 5  # Backup every N batches
+  
+# API Configuration
+apis:
+  claude:
+    model: "claude-sonnet-4-20250514"
+    max_tokens: 500
+    temperature: 0.1
+    enabled: true
+
+# File Paths
+paths:
+  input_csv: "data/papers_input.csv"
+  output_csv: "data/papers_classified.csv"
+  backup_dir: "data/backup"
+  logs_dir: "logs"
+  reports_dir: "reports"
+  api_responses_dir: "logs/api_responses"
+
+# Quality Thresholds
+quality:
+  min_agreement_for_clear: 2  # Minimum API agreements for "Clear" status
+  high_relevance_threshold: 8  # Minimum score for "High" relevance
+  medium_relevance_threshold: 6  # Minimum score for "Medium" relevance
+  low_relevance_threshold: 3  # Minimum score for "Low" relevance
+  confidence_threshold: 0.7  # Minimum confidence for high-quality results
+
+# Category Priorities (1 = highest priority for research focus)
+category_priorities:
+  "Blockchain-SNA Integration": 1
+  "Financial Networks & DeFi": 2
+  "Economic Models & Game Theory": 2
+  "Blockchain Infrastructure": 3
+  "Blockchain Applications": 3
+  "Network Science & Methods": 3
+  "Social Media & Online Networks": 3
+  "Security & Privacy": 4
+  "Governance & Regulation": 4
+  "AI & Machine Learning": 4
+  "IoT & Edge Computing": 5
+  "Healthcare & Biomedical": 5
+  "Supply Chain & Logistics": 5
+  "Organizational Networks": 5
+  "Business Models & Strategy": 5
+  "Literature Reviews": 6
+  "Emerging Technologies": 7
+  "Related Work": 8
+  "Out of Scope": 9
+
+# Research Types (valid options for classification)
+valid_research_types:
+  - "empirical"
+  - "theoretical" 
+  - "methodological"
+  - "review"
+  - "applied"
+  - "experimental"
+  - "conceptual"
+
+# Data Types (valid options for classification)
+valid_data_types:
+  - "real-world"
+  - "synthetic"
+  - "simulation"
+  - "analytical"
+  - "mixed"
+  - "none"
+
+# Output Configuration
+output:
+  save_after_each_batch: true
+  generate_html_report: true
+  generate_statistics_json: true
+  include_api_raw_responses: true
+  timestamp_format: "%Y%m%d_%H%M%S"
+  
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  console_output: true
+  file_output: true
+  colored_output: true
+  log_api_responses: true
+  log_file: "logs/processing_log.txt"
+
+# Validation Rules
+validation:
+  check_required_columns: true
+  validate_category_names: true
+  validate_research_types: true
+  validate_data_types: true
+  check_score_ranges: true
+  check_confidence_ranges: true
+  
+# Display Configuration
+display:
+  show_progress_bars: true
+  show_batch_summaries: true
+  show_paper_titles: true
+  max_title_length: 50
+  color_output: true
+  
+# Error Handling
+error_handling:
+  continue_on_api_failure: true
+  max_consecutive_failures: 10
+  fallback_to_single_api: true
+  save_failed_papers: true
+  
+# Research Focus Keywords (for enhanced classification)
+research_keywords:
+  blockchain:
+    - "blockchain"
+    - "distributed ledger"
+    - "cryptocurrency"
+    - "bitcoin"
+    - "ethereum"
+    - "smart contract"
+    - "consensus"
+    - "proof of work"
+    - "proof of stake"
+    
+  social_network_analysis:
+    - "social network analysis"
+    - "network analysis"
+    - "graph analysis"
+    - "centrality"
+    - "community detection"
+    - "network topology"
+    - "social graph"
+    - "node"
+    - "edge"
+    - "network structure"
+    
+  integration_terms:
+    - "decentralized social network"
+    - "blockchain social"
+    - "network consensus"
+    - "social consensus"
+    - "trust network"
+    - "reputation system"
