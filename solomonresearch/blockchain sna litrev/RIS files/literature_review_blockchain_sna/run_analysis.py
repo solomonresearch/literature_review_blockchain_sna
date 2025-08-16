@@ -17,7 +17,7 @@ def check_and_install_requirements():
     print("🔧 Checking and installing required packages...")
     
     # Install additional requirements
-    requirements_file = "requirements_analysis.txt"
+    requirements_file = "requirements_simple.txt"
     if os.path.exists(requirements_file):
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])

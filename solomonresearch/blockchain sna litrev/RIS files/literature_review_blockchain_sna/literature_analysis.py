@@ -60,12 +60,19 @@ warnings.filterwarnings('ignore')
 
 # Text Processing and NLP
 import nltk
-import spacy
 from textblob import TextBlob
 from wordcloud import WordCloud
 import re
 from collections import Counter, defaultdict
 import itertools
+
+# Optional imports
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    SPACY_AVAILABLE = False
+    print("ℹ️ Spacy not available. Using basic NLP instead.")
 
 # Machine Learning and Clustering
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -75,14 +82,14 @@ from sklearn.manifold import TSNE
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
 
-# Topic Modeling
+# Topic Modeling (optional)
 try:
     import gensim
     from gensim import corpora, models
     GENSIM_AVAILABLE = True
 except ImportError:
     GENSIM_AVAILABLE = False
-    print("Warning: Gensim not available. Topic modeling will be limited.")
+    print("ℹ️ Gensim not available. Using scikit-learn LDA instead.")
 
 # Network Analysis
 try:
