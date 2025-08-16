@@ -675,6 +675,243 @@ class LiteratureAnalyzer:
         self.doc.save(output_file)
         print(f"📄 Final report saved: {output_file}")
     
+    def perform_descriptive_analysis(self):
+        """
+        Perform comprehensive descriptive analysis of the entire dataset.
+        This runs before batch processing to provide dataset overview.
+        """
+        print("\n" + "=" * 80)
+        print("📊 COMPREHENSIVE DESCRIPTIVE ANALYSIS")
+        print("=" * 80)
+        
+        # Add descriptive analysis section to document
+        self.doc.add_heading("PART I: COMPREHENSIVE DATASET OVERVIEW", level=1)
+        self.doc.add_paragraph(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.doc.add_paragraph(f"Total Papers in Dataset: {len(self.df)}")
+        
+        # 1. TEMPORAL DISTRIBUTION ANALYSIS
+        print("\n📅 1. TEMPORAL DISTRIBUTION ANALYSIS")
+        self.doc.add_heading("1. Temporal Distribution Analysis", level=2)
+        
+        year_dist = self.df['year'].value_counts().sort_index()
+        period_dist = self.df['time_period'].value_counts()
+        
+        print(f"   • Year Range: {self.df['year'].min()}-{self.df['year'].max()}")
+        print(f"   • Most Productive Year: {year_dist.idxmax()} ({year_dist.max()} papers)")
+        print(f"   • Average Papers per Year: {len(self.df) / len(year_dist):.1f}")
+        
+        # Add temporal analysis to document
+        self.doc.add_paragraph(f"Year Range: {self.df['year'].min()}-{self.df['year'].max()}")
+        self.doc.add_paragraph(f"Most Productive Year: {year_dist.idxmax()} with {year_dist.max()} papers")
+        
+        # Year-by-year breakdown
+        self.doc.add_heading("Annual Publication Distribution", level=3)
+        for year, count in year_dist.items():
+            percentage = (count / len(self.df)) * 100
+            self.doc.add_paragraph(f"  • {year}: {count} papers ({percentage:.1f}%)")
+        
+        # Time period analysis
+        self.doc.add_heading("Time Period Analysis", level=3)
+        for period, count in period_dist.items():
+            percentage = (count / len(self.df)) * 100
+            self.doc.add_paragraph(f"  • {period}: {count} papers ({percentage:.1f}%)")
+        
+        # 2. RESEARCH CATEGORY ANALYSIS
+        print("\n🏷️ 2. RESEARCH CATEGORY ANALYSIS")
+        self.doc.add_heading("2. Research Category Distribution", level=2)
+        
+        category_dist = self.df['Claude_Category'].value_counts()
+        secondary_dist = self.df['Claude_Secondary'].value_counts()
+        
+        print(f"   • Total Primary Categories: {len(category_dist)}")
+        print(f"   • Most Common Category: {category_dist.index[0]} ({category_dist.iloc[0]} papers)")
+        print(f"   • Papers with Secondary Categories: {len(self.df[self.df['Claude_Secondary'].str.len() > 0])}")
+        
+        # Primary categories
+        self.doc.add_heading("Primary Research Categories", level=3)
+        for category, count in category_dist.items():
+            percentage = (count / len(self.df)) * 100
+            self.doc.add_paragraph(f"  • {category}: {count} papers ({percentage:.1f}%)")
+        
+        # Secondary categories (if any)
+        if len(secondary_dist) > 0:
+            self.doc.add_heading("Secondary Research Categories", level=3)
+            for category, count in secondary_dist.head(10).items():
+                if category and str(category).strip():
+                    percentage = (count / len(self.df)) * 100
+                    self.doc.add_paragraph(f"  • {category}: {count} papers ({percentage:.1f}%)")
+        
+        # 3. METHODOLOGICAL APPROACH ANALYSIS
+        print("\n🔬 3. METHODOLOGICAL APPROACH ANALYSIS")
+        self.doc.add_heading("3. Methodological Approaches", level=2)
+        
+        method_dist = self.df['Claude_Type'].value_counts()
+        data_dist = self.df['Claude_Data'].value_counts()
+        
+        print(f"   • Total Methodology Types: {len(method_dist)}")
+        print(f"   • Most Common Method: {method_dist.index[0]} ({method_dist.iloc[0]} papers)")
+        
+        # Methodology distribution
+        self.doc.add_heading("Research Methodology Distribution", level=3)
+        for method, count in method_dist.items():
+            if method and str(method).strip():
+                percentage = (count / len(self.df)) * 100
+                self.doc.add_paragraph(f"  • {method}: {count} papers ({percentage:.1f}%)")
+        
+        # Data type distribution
+        self.doc.add_heading("Data Source Types", level=3)
+        for data_type, count in data_dist.items():
+            if data_type and str(data_type).strip():
+                percentage = (count / len(self.df)) * 100
+                self.doc.add_paragraph(f"  • {data_type}: {count} papers ({percentage:.1f}%)")
+        
+        # 4. PUBLICATION VENUE ANALYSIS
+        print("\n📚 4. PUBLICATION VENUE ANALYSIS")
+        self.doc.add_heading("4. Publication Venue Analysis", level=2)
+        
+        journal_dist = self.df['journal'].value_counts().head(20)
+        
+        # Extract publisher information from journal names
+        publisher_analysis = self.analyze_publishers()
+        
+        print(f"   • Total Unique Journals: {self.df['journal'].nunique()}")
+        print(f"   • Most Productive Journal: {journal_dist.index[0]} ({journal_dist.iloc[0]} papers)")
+        
+        # Top journals
+        self.doc.add_heading("Top 20 Publication Venues", level=3)
+        for journal, count in journal_dist.items():
+            percentage = (count / len(self.df)) * 100
+            self.doc.add_paragraph(f"  • {journal}: {count} papers ({percentage:.1f}%)")
+        
+        # Publisher analysis
+        if publisher_analysis:
+            self.doc.add_heading("Publisher Analysis", level=3)
+            for publisher, count in publisher_analysis.items():
+                percentage = (count / len(self.df)) * 100
+                self.doc.add_paragraph(f"  • {publisher}: {count} papers ({percentage:.1f}%)")
+        
+        # 5. CROSS-DOMAIN INTEGRATION ANALYSIS
+        print("\n🔗 5. CROSS-DOMAIN INTEGRATION ANALYSIS")
+        self.doc.add_heading("5. Cross-Domain Integration Patterns", level=2)
+        
+        # Category combinations
+        cross_domain = []
+        for _, row in self.df.iterrows():
+            if row['Claude_Secondary'] and str(row['Claude_Secondary']).strip():
+                pair = (row['Claude_Category'], row['Claude_Secondary'])
+                cross_domain.append(pair)
+        
+        if cross_domain:
+            cross_domain_dist = Counter(cross_domain)
+            
+            print(f"   • Papers with Secondary Categories: {len(cross_domain)}")
+            print(f"   • Unique Category Combinations: {len(cross_domain_dist)}")
+            
+            self.doc.add_heading("Most Common Category Combinations", level=3)
+            for (primary, secondary), count in cross_domain_dist.most_common(10):
+                percentage = (count / len(cross_domain)) * 100
+                self.doc.add_paragraph(f"  • {primary} + {secondary}: {count} papers ({percentage:.1f}%)")
+        
+        # 6. RESEARCH GAPS PRELIMINARY ANALYSIS
+        print("\n🎯 6. RESEARCH GAPS PRELIMINARY ANALYSIS")
+        self.doc.add_heading("6. Research Gaps Overview", level=2)
+        
+        # Collect all research gaps
+        all_gaps = []
+        for _, row in self.df.iterrows():
+            if row['Claude_Gap1'] and str(row['Claude_Gap1']).strip():
+                all_gaps.append(str(row['Claude_Gap1']))
+            if row['Claude_Gap2'] and str(row['Claude_Gap2']).strip():
+                all_gaps.append(str(row['Claude_Gap2']))
+        
+        print(f"   • Papers with Research Gaps: {len([g for g in all_gaps if g])}")
+        print(f"   • Total Gap Statements: {len(all_gaps)}")
+        
+        self.doc.add_paragraph(f"Papers identifying research gaps: {len([g for g in all_gaps if g])}")
+        self.doc.add_paragraph(f"Total gap statements collected: {len(all_gaps)}")
+        
+        # 7. TEMPORAL-CATEGORY EVOLUTION
+        print("\n📈 7. TEMPORAL-CATEGORY EVOLUTION")
+        self.doc.add_heading("7. Research Evolution Over Time", level=2)
+        
+        # Category evolution by time period
+        category_by_period = self.df.groupby(['time_period', 'Claude_Category']).size().unstack(fill_value=0)
+        
+        self.doc.add_heading("Category Distribution by Time Period", level=3)
+        for period in ['2018-2019', '2020-2021', '2022-2023', '2024-2025']:
+            if period in category_by_period.index:
+                self.doc.add_paragraph(f"\n{period}:")
+                period_data = category_by_period.loc[period].sort_values(ascending=False)
+                total_period = period_data.sum()
+                for category, count in period_data.head(5).items():
+                    percentage = (count / total_period) * 100
+                    self.doc.add_paragraph(f"  • {category}: {count} papers ({percentage:.1f}%)")
+        
+        # 8. DATASET QUALITY METRICS
+        print("\n✅ 8. DATASET QUALITY METRICS")
+        self.doc.add_heading("8. Dataset Quality Assessment", level=2)
+        
+        # Check data completeness
+        completeness = {}
+        key_fields = ['title', 'abstract', 'authors', 'year', 'doi', 'journal', 'Claude_Category']
+        
+        for field in key_fields:
+            non_empty = self.df[field].notna().sum()
+            completeness[field] = (non_empty / len(self.df)) * 100
+        
+        self.doc.add_heading("Data Completeness Analysis", level=3)
+        for field, percentage in completeness.items():
+            self.doc.add_paragraph(f"  • {field}: {percentage:.1f}% complete")
+        
+        # Summary statistics
+        print(f"   • Average Abstract Length: {self.df['abstract'].str.len().mean():.0f} characters")
+        print(f"   • Papers with DOI: {self.df['doi'].notna().sum()} ({(self.df['doi'].notna().sum()/len(self.df)*100):.1f}%)")
+        
+        # Save descriptive analysis
+        self.doc.add_paragraph("-" * 80)
+        self.doc.add_paragraph("End of Descriptive Analysis - Batch Processing Results Follow")
+        self.doc.add_paragraph("-" * 80)
+        
+        # Save intermediate document
+        output_file = f"/Users/v/solomonresearch/blockchain sna litrev/RIS files/literature_analysis_descriptive.docx"
+        self.doc.save(output_file)
+        print(f"\n📄 Descriptive analysis saved: {output_file}")
+        
+        print("\n✅ Descriptive Analysis Complete!")
+        print("=" * 80)
+    
+    def analyze_publishers(self):
+        """Analyze publishers from journal names."""
+        publisher_patterns = {
+            'IEEE': ['IEEE', 'Institute of Electrical'],
+            'Elsevier': ['Elsevier', 'Science Direct'],
+            'Springer': ['Springer', 'Nature'],
+            'ACM': ['ACM', 'Association for Computing'],
+            'Wiley': ['Wiley'],
+            'MDPI': ['MDPI'],
+            'Taylor & Francis': ['Taylor', 'Francis'],
+            'PLOS': ['PLOS', 'PLoS'],
+            'BMC': ['BMC', 'BioMed Central'],
+            'Frontiers': ['Frontiers'],
+            'SAGE': ['SAGE'],
+            'Oxford': ['Oxford'],
+            'Cambridge': ['Cambridge']
+        }
+        
+        publisher_counts = defaultdict(int)
+        
+        for journal in self.df['journal'].fillna(''):
+            journal_str = str(journal).upper()
+            for publisher, patterns in publisher_patterns.items():
+                if any(pattern.upper() in journal_str for pattern in patterns):
+                    publisher_counts[publisher] += 1
+                    break
+            else:
+                publisher_counts['Other'] += 1
+        
+        # Return top publishers
+        return dict(sorted(publisher_counts.items(), key=lambda x: x[1], reverse=True)[:10])
+
     async def run_analysis(self):
         """
         Main analysis pipeline that processes the dataset in batches.
@@ -685,6 +922,13 @@ class LiteratureAnalyzer:
         # Load and validate data
         if not self.load_and_validate_data():
             return False
+        
+        # Perform comprehensive descriptive analysis first
+        self.perform_descriptive_analysis()
+        
+        # Add section separator for batch processing
+        self.doc.add_heading("PART II: DETAILED BATCH ANALYSIS", level=1)
+        self.doc.add_paragraph("The following sections contain detailed analysis of papers processed in batches with AI-assisted insights.")
         
         # Process data in batches
         for batch_num in range(1, self.total_batches + 1):

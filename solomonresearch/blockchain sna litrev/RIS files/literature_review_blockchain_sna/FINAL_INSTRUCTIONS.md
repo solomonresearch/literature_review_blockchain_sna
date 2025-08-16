@@ -13,14 +13,23 @@ Your comprehensive literature analysis system is now successfully installed and 
 
 ## 🚀 How to Run the Analysis
 
-### Option 1: Direct Execution (Recommended)
+### Option 1: Quick Descriptive Analysis First (Recommended)
+```bash
+cd "/Users/v/solomonresearch/blockchain sna litrev/RIS files/literature_review_blockchain_sna"
+source venv/bin/activate
+python run_descriptive_only.py
+```
+*Gives comprehensive dataset overview in ~5 minutes*
+
+### Option 2: Full Analysis (Complete System)
 ```bash
 cd "/Users/v/solomonresearch/blockchain sna litrev/RIS files/literature_review_blockchain_sna"
 source venv/bin/activate
 python literature_analysis.py
 ```
+*Includes descriptive analysis + detailed batch processing (2-3 hours)*
 
-### Option 2: Test First, Then Run
+### Option 3: Test First, Then Run
 ```bash
 # Test the system
 python test_analysis.py
@@ -31,17 +40,23 @@ python literature_analysis.py
 
 ## 📄 Output Files
 
-The system generates two comprehensive reports:
+The system generates comprehensive reports:
 
-1. **Real-time Report**: `literature_analysis_report.docx`
-   - Updates after each batch
-   - Shows incremental progress
-   - Allows you to monitor progress in real-time
+1. **Descriptive Analysis Report**: `literature_analysis_descriptive.docx`
+   - **NEW**: Complete dataset overview (generated in ~5 minutes)
+   - Temporal distributions, category analysis, publisher analysis
+   - Research evolution patterns, quality metrics
+   - Perfect for quick insights and initial analysis
 
-2. **Final Report**: `literature_analysis_report_final.docx`
-   - Complete comprehensive analysis
-   - Publication-ready formatting
-   - All statistics, tables, and recommendations
+2. **Real-time Report**: `literature_analysis_report.docx`
+   - Updates after each batch during full analysis
+   - Shows incremental progress with AI insights
+   - Allows you to monitor detailed progress in real-time
+
+3. **Final Report**: `literature_analysis_report_final.docx`
+   - Complete comprehensive analysis (full system)
+   - Publication-ready formatting with all components
+   - All statistics, tables, AI insights, and recommendations
 
 ## 🔬 Analysis Features
 
