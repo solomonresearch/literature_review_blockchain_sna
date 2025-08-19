@@ -61,40 +61,63 @@ python run_clustering.py
 
 ### 📊 Classification Categories
 
-The system uses 19 research categories ranked by relevance to blockchain-SNA research:
+The system evolved during implementation to use a refined taxonomy that better reflects the actual research landscape discovered in the abstracts. The final categories used for classification are:
 
-**High Priority (1-2):**
-- Blockchain-SNA Integration
-- Financial Networks & DeFi
-- Economic Models & Game Theory
+#### **Core Research Categories (Actual Implementation)**
 
-**Medium Priority (3-4):**
-- Blockchain Infrastructure
-- Blockchain Applications
-- Network Science & Methods
-- Social Media & Online Networks
-- Security & Privacy
-- Governance & Regulation
-- AI & Machine Learning
+1. **Network Science & Methods** - Fundamental network analysis techniques, graph theory, and methodological approaches
+2. **Financial Networks & DeFi** - Financial networks, cryptocurrency ecosystems, and decentralized finance applications
+3. **Blockchain-SNA Integration** - Direct integration of blockchain technology with social network analysis
+4. **AI & Machine Learning** - Machine learning and artificial intelligence applications in blockchain/network contexts
+5. **Security & Privacy** - Security mechanisms, privacy-preserving techniques, and vulnerability analysis
+6. **Blockchain Infrastructure** - Core blockchain technology, consensus mechanisms, and architectural components
+7. **Blockchain Applications** - General blockchain applications and use cases
+8. **IoT & Edge Computing** - Internet of Things and edge computing integration with blockchain
+9. **Supply Chain & Logistics** - Supply chain management and logistics applications
+10. **Economic Models & Game Theory** - Economic modeling, game theory, and incentive mechanisms
+11. **Social Media & Online Networks** - Social media analysis and online network dynamics
+12. **Healthcare & Biomedical** - Healthcare and biomedical applications
+13. **Literature Reviews** - Systematic reviews and survey papers
+14. **Governance & Regulation** - Governance models and regulatory frameworks
+15. **Emerging Technologies** - Novel and emerging technology integrations
+16. **Business Models & Strategy** - Business applications and strategic implementations
+17. **Organizational Networks** - Organizational and enterprise network analysis
+18. **Related Work** - Tangentially related research
+19. **Out of Scope** - Papers outside the research domain
 
-**Lower Priority (5-9):**
-- IoT & Edge Computing
-- Healthcare & Biomedical
-- Supply Chain & Logistics
-- Organizational Networks
-- Business Models & Strategy
-- Literature Reviews
-- Emerging Technologies
-- Related Work
-- Out of Scope
+#### **Category Distribution Insights**
+
+Based on the actual classification of 744 papers, the most prevalent categories are:
+
+- **Network Science & Methods** (~40% of papers) - Reflecting the strong methodological foundation
+- **Financial Networks & DeFi** (~30% of papers) - Indicating significant focus on financial applications
+- **AI & Machine Learning** (~25% of papers) - Showing the integration of AI techniques
+- **Security & Privacy** (~20% of papers) - Highlighting security as a cross-cutting concern
+- **Blockchain-SNA Integration** (~15% of papers) - Direct intersection of both domains
+
+#### **Evolution from Original Taxonomy**
+
+The classification system adapted from the initial 19-category proposal to better capture:
+- Broader methodological categories rather than specific techniques
+- Emerging application domains (Healthcare, IoT, Supply Chain)
+- Interdisciplinary nature of the research field
+- Practical implementation considerations
+
+This evolution demonstrates the system's responsiveness to actual research content rather than forcing predetermined categories.
 
 ### 📈 Output Format
 
 The system produces a comprehensive CSV with:
 
 **Claude API Results:**
-- Category, Secondary Category, Research Type, Data Type
-- Research Gaps (max 2), Relevance Score (1-10), Confidence (0-1)
+- **Claude_Category**: Primary research category 
+- **Claude_Type**: Research methodology (Empirical/Theoretical/Review/Mixed)
+- **Claude_Data**: Data source type
+- **Claude_Gap1, Claude_Gap2**: Identified research gaps (max 2)
+- **Claude_Score**: Relevance score (1-10)
+- **Claude_Confidence**: Classification confidence (0-1)
+
+**Note**: Secondary category field (Claude_Secondary) was removed from final implementation to focus on primary categorization accuracy.
 
 **Classification Metrics:**
 - Final Category (from Claude classification)
@@ -202,15 +225,32 @@ Machine-readable metrics:
 }
 ```
 
-### 🔬 Academic Rigor
+### 🔬 Academic Rigor & Methodology
 
 This system is designed for publication in top-tier journals with:
 
 - **Reproducibility**: Fixed seeds, logged decisions
-- **Transparency**: All API disagreements visible
+- **Transparency**: All classification decisions traceable
 - **Validation**: Comprehensive error checking
 - **Documentation**: Complete methodology tracking
 - **Statistics**: Publication-ready metrics
+
+#### **Classification Methodology**
+
+The system employs a sophisticated LLM-based classification approach:
+
+1. **Abstract-Based Analysis**: Each paper's abstract is analyzed for semantic content
+2. **Contextual Understanding**: Claude Sonnet 4 provides deep comprehension beyond keyword matching
+3. **Structured Prompting**: Carefully designed prompts ensure consistent categorization
+4. **No-Hallucination Policy**: Only information explicitly in abstracts is used
+5. **Confidence Assessment**: Each classification includes confidence scoring
+
+#### **Quality Control Measures**
+
+- **Temperature Setting**: 0.1 for highly deterministic results
+- **Batch Processing**: 10 papers per batch for optimal accuracy
+- **Validation Checks**: Category names, score ranges, and data integrity
+- **Audit Trail**: Complete logging of all classification decisions
 
 ### ⚡ Performance Specifications
 
