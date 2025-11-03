@@ -1,5 +1,10 @@
 # Hand of God - AI Development Guide
 
+> **Important Documents**:
+> - **[ARCHITECTURE.md](../ARCHITECTURE.md)** - Complete technical architecture with module specifications
+> - **[TODO.md](../TODO.md)** - Comprehensive implementation checklist (100+ tasks)
+> - **[README.md](../README.md)** - Project overview and getting started guide
+
 ## Project Overview
 
 **Hand of God** is a high-performance, scalable network visualization and simulation platform designed to handle large-scale networks (5,000-10,000+ nodes) with advanced analytical capabilities similar to Gephi, but with enhanced simulation and intervention features.
@@ -10,6 +15,27 @@
 - Enable network intervention and simulation with variable repetitions/rounds
 - Deliver high-performance, browser-based visualization
 - Support collaborative research with Supabase backend
+
+### Key Documentation
+
+1. **ARCHITECTURE.md** - Read this for:
+   - Detailed module specifications and interfaces
+   - Data flow diagrams
+   - File format specifications
+   - Performance optimization strategies
+   - Implementation status tracking
+
+2. **TODO.md** - Use this for:
+   - Detailed task breakdown by module
+   - Priority matrix (critical → low priority)
+   - Implementation milestones
+   - Progress tracking (update after each module completion)
+
+3. **This Guide** - For:
+   - Quick reference and best practices
+   - Git workflow (commit after every change)
+   - Supabase configuration
+   - AI assistant guidelines
 
 ---
 

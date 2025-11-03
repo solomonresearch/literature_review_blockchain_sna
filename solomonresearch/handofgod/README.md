@@ -64,27 +64,86 @@ handofgod/
 │   └── AI_DEVELOPMENT_GUIDE.md  # Comprehensive project documentation
 ├── app/                         # Next.js app directory
 ├── components/                  # React components
+│   ├── auth/                   # Authentication components
+│   ├── dashboard/              # Dashboard layout
+│   ├── network/                # Network visualization
+│   ├── simulation/             # Simulation controls
+│   └── ui/                     # shadcn/ui components
 ├── lib/                         # Utilities and core logic
 │   ├── supabase/               # Supabase integration
-│   └── network/                # Network algorithms and rendering
+│   ├── network/                # Network algorithms and rendering
+│   │   ├── algorithms/         # Layout, metrics, simulation
+│   │   ├── parsers/            # File format parsers
+│   │   └── renderer/           # WebGL renderer
+│   └── utils/                  # Helper functions
 ├── public/                      # Static assets
-└── styles/                      # Global styles
+├── styles/                      # Global styles
+├── ARCHITECTURE.md              # Technical architecture
+└── TODO.md                      # Implementation checklist
 ```
 
-## AI Development Guide
+## Documentation
 
-**Important**: If you're an AI assistant (like Claude, GPT, etc.) working on this project, please read the comprehensive development guide first:
+### For AI Assistants & Developers
 
-**[.ai-docs/AI_DEVELOPMENT_GUIDE.md](.ai-docs/AI_DEVELOPMENT_GUIDE.md)**
+**Important**: Read these documents before contributing:
 
-This guide contains:
-- Complete architecture and design decisions
-- Technology stack details
-- Database schema and Supabase configuration
-- Development workflow and git practices
-- Implementation phases and best practices
-- Performance guidelines and optimization strategies
-- Security considerations
+1. **[.ai-docs/AI_DEVELOPMENT_GUIDE.md](.ai-docs/AI_DEVELOPMENT_GUIDE.md)** - Complete development guide
+   - Technology stack details
+   - Database schema and Supabase configuration
+   - Development workflow and git practices
+   - Performance guidelines and optimization strategies
+   - Security considerations
+
+2. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture
+   - System overview and design
+   - Module specifications and interfaces
+   - Data flow and state management
+   - File format specifications
+   - Implementation status
+
+3. **[TODO.md](TODO.md)** - Implementation checklist
+   - Comprehensive task list (100+ tasks)
+   - Organized by module and phase
+   - Priority matrix and milestones
+   - Progress tracking
+
+### Architecture Overview
+
+Hand of God follows a modular architecture with clear separation of concerns:
+
+**Presentation Layer** → **Application Layer** → **Data Layer** → **Backend (Supabase)**
+
+#### Core Modules
+
+1. **Parser Module** (`lib/network/parsers/`)
+   - Supports CSV, GEXF, GraphML, JSON formats
+   - Validates and converts to Graphology graph format
+
+2. **Network Manager** (`lib/network/manager.ts`)
+   - Manages graph data structure using Graphology
+   - Handles layout algorithms (ForceAtlas2, circular, etc.)
+   - Node/edge attribute management
+
+3. **Visualization Renderer** (`components/network/NetworkCanvas.tsx`)
+   - WebGL-based rendering for performance
+   - Spatial indexing for large networks
+   - Interactive zoom, pan, selection
+
+4. **Simulation Engine** (`lib/network/algorithms/simulation.ts`)
+   - Threshold, cascade, diffusion models
+   - Web Worker-based execution
+   - Rounds and repetitions support
+
+5. **Analytics Module** (`lib/network/algorithms/metrics.ts`)
+   - Network metrics (centrality, clustering, etc.)
+   - Community detection (Louvain algorithm)
+   - Time series tracking
+
+6. **Export Module** (`lib/network/parsers/export.ts`)
+   - Export to CSV, GEXF, GraphML, JSON
+   - Statistical reports and charts
+   - Configuration save/load
 
 ## Features
 
@@ -155,30 +214,44 @@ The project uses Supabase for authentication and data storage. See [AI_DEVELOPME
 
 ## Roadmap
 
-### Phase 1: Foundation ✅
+> **See [TODO.md](TODO.md) for detailed implementation checklist**
+
+### Phase 1: Foundation (Week 1-4) 🔄
 - [x] Project structure and documentation
-- [ ] Supabase authentication
-- [ ] Dashboard mockup
+- [x] Supabase authentication
+- [x] Dashboard mockup with shadcn/ui
+- [ ] CSV parser implementation ⚠️
+- [ ] Basic network visualization ⚠️
+- [ ] Graphology integration ⚠️
 
-### Phase 2: Core Visualization
+### Phase 2: Core Visualization (Week 5-8)
 - [ ] WebGL renderer implementation
-- [ ] Basic network loading
-- [ ] Interactive controls
-- [ ] Layout algorithms
+- [ ] All file format parsers (CSV, GEXF, GraphML, JSON)
+- [ ] Interactive controls (zoom, pan, select)
+- [ ] Layout algorithms (ForceAtlas2, circular, etc.)
+- [ ] Color and size mapping
 
-### Phase 3: Advanced Features
-- [ ] Clustering and community detection
-- [ ] Network metrics
-- [ ] Multi-attribute visualization
+### Phase 3: Simulation Engine (Week 9-12)
+- [ ] Simulation engine core
+- [ ] Threshold, cascade, diffusion models
+- [ ] Web Workers for performance
+- [ ] Simulation UI and controls
+- [ ] Results tracking and export
 
-### Phase 4: Simulation
-- [ ] Intervention simulations
-- [ ] Diffusion models
-- [ ] Results visualization
+### Phase 4: Analytics (Week 13-16)
+- [ ] Network metrics (centrality, clustering, etc.)
+- [ ] Community detection (Louvain)
+- [ ] Charts and visualizations
+- [ ] Time series analysis
+- [ ] Statistical reports
 
-### Phase 5: Performance & Scale
-- [ ] Optimize for 10k+ nodes
-- [ ] Advanced rendering techniques
+### Phase 5: Advanced Features & Production (Week 17+)
+- [ ] Performance optimization (10k+ nodes @ 60fps)
+- [ ] Network generation tools
+- [ ] Collaboration features
+- [ ] API and integrations
+- [ ] Comprehensive testing
+- [ ] Production deployment
 
 ## License
 
