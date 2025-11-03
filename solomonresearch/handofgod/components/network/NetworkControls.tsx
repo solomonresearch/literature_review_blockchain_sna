@@ -1,99 +1,104 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Slider } from '@/components/ui/slider'
+import { Label } from '@/components/ui/label'
 
 export default function NetworkControls() {
   const [layout, setLayout] = useState('force-directed')
   const [showClusters, setShowClusters] = useState(false)
-  const [nodeSize, setNodeSize] = useState(5)
+  const [nodeSize, setNodeSize] = useState([5])
 
   return (
-    <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
-      <div className="flex items-center gap-8">
+    <div className="bg-card border-t border-border p-4">
+      <div className="flex items-center gap-8 flex-wrap">
         {/* Layout Selection */}
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Label className="text-sm font-medium whitespace-nowrap">
             Layout:
-          </label>
-          <select
-            value={layout}
-            onChange={(e) => setLayout(e.target.value)}
-            className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-          >
-            <option value="force-directed">Force-Directed</option>
-            <option value="hierarchical">Hierarchical</option>
-            <option value="circular">Circular</option>
-            <option value="grid">Grid</option>
-            <option value="geographic">Geographic</option>
-          </select>
+          </Label>
+          <Select value={layout} onValueChange={setLayout}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select layout" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="force-directed">Force-Directed</SelectItem>
+              <SelectItem value="hierarchical">Hierarchical</SelectItem>
+              <SelectItem value="circular">Circular</SelectItem>
+              <SelectItem value="grid">Grid</SelectItem>
+              <SelectItem value="geographic">Geographic</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Clustering Toggle */}
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Label className="text-sm font-medium whitespace-nowrap">
             Clusters:
-          </label>
-          <button
+          </Label>
+          <Button
             onClick={() => setShowClusters(!showClusters)}
-            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-              showClusters
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-            }`}
+            variant={showClusters ? "default" : "outline"}
+            size="sm"
           >
             {showClusters ? 'On' : 'Off'}
-          </button>
+          </Button>
         </div>
 
         {/* Node Size Slider */}
         <div className="flex items-center gap-2 flex-1 max-w-xs">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
+          <Label className="text-sm font-medium whitespace-nowrap">
             Node Size:
-          </label>
-          <input
-            type="range"
-            min="1"
-            max="10"
+          </Label>
+          <Slider
             value={nodeSize}
-            onChange={(e) => setNodeSize(parseInt(e.target.value))}
+            onValueChange={setNodeSize}
+            min={1}
+            max={10}
+            step={1}
             className="flex-1"
           />
-          <span className="text-sm text-gray-600 dark:text-gray-400 w-8">
-            {nodeSize}
+          <span className="text-sm text-muted-foreground w-8">
+            {nodeSize[0]}
           </span>
         </div>
 
         {/* Display Options */}
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <Label className="text-sm font-medium whitespace-nowrap">
             Display:
-          </label>
+          </Label>
           <div className="flex gap-1">
-            <button
-              className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md text-sm"
+            <Button
+              variant="outline"
+              size="sm"
               title="Show Labels"
             >
               🏷️
-            </button>
-            <button
-              className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md text-sm"
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               title="Color by Attribute"
             >
               🎨
-            </button>
-            <button
-              className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-md text-sm"
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               title="Filter"
             >
               🔍
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* Simulation Button */}
-        <button className="ml-auto px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium">
+        <Button className="ml-auto bg-green-600 hover:bg-green-700">
           ▶ Run Simulation
-        </button>
+        </Button>
       </div>
     </div>
   )

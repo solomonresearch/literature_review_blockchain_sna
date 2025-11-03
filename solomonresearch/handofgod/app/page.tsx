@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Home() {
   return (
@@ -17,58 +19,72 @@ export default function Home() {
           </p>
 
           <div className="flex gap-4 justify-center mb-16">
-            <Link
-              href="/auth/signup"
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-            >
-              Get Started
-            </Link>
-            <Link
-              href="/auth/login"
-              className="px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-semibold"
-            >
-              Login
-            </Link>
+            <Button asChild size="lg">
+              <Link href="/auth/signup">
+                Get Started
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/auth/login">
+                Login
+              </Link>
+            </Button>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mt-16">
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-              <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-semibold mb-2">High Performance</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                WebGL-powered rendering for smooth visualization of 5,000-10,000 node networks
-              </p>
-            </div>
+            <Card>
+              <CardHeader>
+                <div className="text-4xl mb-4">⚡</div>
+                <CardTitle>High Performance</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  WebGL-powered rendering for smooth visualization of 5,000-10,000 node networks
+                </CardDescription>
+              </CardContent>
+            </Card>
 
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-              <div className="text-4xl mb-4">🔬</div>
-              <h3 className="text-xl font-semibold mb-2">Advanced Analysis</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Clustering, community detection, and comprehensive network metrics
-              </p>
-            </div>
+            <Card>
+              <CardHeader>
+                <div className="text-4xl mb-4">🔬</div>
+                <CardTitle>Advanced Analysis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  Clustering, community detection, and comprehensive network metrics
+                </CardDescription>
+              </CardContent>
+            </Card>
 
-            <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-              <div className="text-4xl mb-4">🎮</div>
-              <h3 className="text-xl font-semibold mb-2">Simulations</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Run intervention and diffusion simulations with variable repetitions
-              </p>
-            </div>
+            <Card>
+              <CardHeader>
+                <div className="text-4xl mb-4">🎮</div>
+                <CardTitle>Simulations</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  Run intervention and diffusion simulations with variable repetitions
+                </CardDescription>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="mt-16 p-8 bg-blue-50 dark:bg-gray-800 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Features Similar to Gephi, Enhanced for Research</h2>
-            <ul className="text-left max-w-2xl mx-auto space-y-2 text-gray-700 dark:text-gray-300">
-              <li>✓ Multiple layout algorithms (Force-directed, Hierarchical, Circular)</li>
-              <li>✓ Node and edge styling by attributes</li>
-              <li>✓ Community detection and clustering</li>
-              <li>✓ Comprehensive centrality metrics</li>
-              <li>✓ Network intervention simulations</li>
-              <li>✓ Export to multiple formats</li>
-              <li>✓ Cloud-based collaboration</li>
-            </ul>
-          </div>
+          <Card className="mt-16">
+            <CardHeader>
+              <CardTitle className="text-2xl">Features Similar to Gephi, Enhanced for Research</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="text-left max-w-2xl mx-auto space-y-2">
+                <li>✓ Multiple layout algorithms (Force-directed, Hierarchical, Circular)</li>
+                <li>✓ Node and edge styling by attributes</li>
+                <li>✓ Community detection and clustering</li>
+                <li>✓ Comprehensive centrality metrics</li>
+                <li>✓ Network intervention simulations</li>
+                <li>✓ Export to multiple formats</li>
+                <li>✓ Cloud-based collaboration</li>
+              </ul>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </main>
