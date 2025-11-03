@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { BarChart3, Sparkles, Save, Clock } from 'lucide-react'
 
 export default function DashboardPage() {
   return (
@@ -38,13 +39,16 @@ export default function DashboardPage() {
               </h4>
               <div className="space-y-2">
                 <Button variant="outline" className="w-full justify-start">
-                  📊 Calculate Metrics
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Calculate Metrics
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
-                  🔮 Detect Communities
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Detect Communities
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
-                  💾 Export Network
+                  <Save className="w-4 h-4 mr-2" />
+                  Export Network
                 </Button>
               </div>
             </div>
@@ -88,24 +92,33 @@ export default function DashboardPage() {
               </h4>
               <div className="space-y-2 text-xs text-muted-foreground">
                 <div className="flex items-start gap-2">
-                  <span>📊</span>
+                  <BarChart3 className="w-4 h-4 mt-0.5" />
                   <div>
                     <p>Calculated betweenness centrality</p>
-                    <p className="text-muted-foreground/60">2 min ago</p>
+                    <p className="text-muted-foreground/60 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      2 min ago
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span>🎮</span>
+                  <Sparkles className="w-4 h-4 mt-0.5" />
                   <div>
                     <p>Ran diffusion simulation</p>
-                    <p className="text-muted-foreground/60">5 min ago</p>
+                    <p className="text-muted-foreground/60 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      5 min ago
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span>💾</span>
+                  <Save className="w-4 h-4 mt-0.5" />
                   <div>
                     <p>Saved network layout</p>
-                    <p className="text-muted-foreground/60">10 min ago</p>
+                    <p className="text-muted-foreground/60 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      10 min ago
+                    </p>
                   </div>
                 </div>
               </div>

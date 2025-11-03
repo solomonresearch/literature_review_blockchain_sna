@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
 import { Label } from '@/components/ui/label'
+import { Tag, Palette, Filter, Play } from 'lucide-react'
 
 export default function NetworkControls() {
   const [layout, setLayout] = useState('force-directed')
@@ -76,28 +77,29 @@ export default function NetworkControls() {
               size="sm"
               title="Show Labels"
             >
-              🏷️
+              <Tag className="w-4 h-4" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               title="Color by Attribute"
             >
-              🎨
+              <Palette className="w-4 h-4" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               title="Filter"
             >
-              🔍
+              <Filter className="w-4 h-4" />
             </Button>
           </div>
         </div>
 
         {/* Simulation Button */}
         <Button className="ml-auto bg-green-600 hover:bg-green-700">
-          ▶ Run Simulation
+          <Play className="w-4 h-4 mr-2" />
+          Run Simulation
         </Button>
       </div>
     </div>
